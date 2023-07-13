@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/practice?serverTimezone=Asia/Seoul
-    username: root
-    password: root
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url:  jdbc:sqlserver://localhost:1433;databaseName=thingsboard
+    username: thingsboard
+    password: thingsboard
   jpa:
     open-in-view: false #영속성 컨텍스트가 transactional 범위 넘어서 까지 살아있지 않으니 false
     generate-ddl: true #@Entity 를 찾아서 서버 시작 시점에 ddl 문을 생성해서 db에 적용을 함.
@@ -20,3 +20,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+server:
+  port: 8090
+
+thingsboard:
+  url: 'http://localhost:8080/api/v1/'
