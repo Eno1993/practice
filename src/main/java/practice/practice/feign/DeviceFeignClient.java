@@ -16,5 +16,14 @@ public interface DeviceFeignClient {
             produces = "application/json"
     )
     Long sendTelemetry(@PathVariable("accessToken") String accessToken,
-                       @RequestBody String telemetry) throws Exception;
+                       @RequestBody String payLoad) throws Exception;
+
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            value = "/{accessToken}/attribute",
+            produces = "application/json"
+    )
+    Long sendAttribute(@PathVariable("accessToken") String accessToken,
+                       @RequestBody String payLoad) throws Exception;
 }

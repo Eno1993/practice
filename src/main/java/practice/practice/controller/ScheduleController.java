@@ -18,8 +18,8 @@ public class ScheduleController {
     }
 
     @PostMapping("/stop")
-    public void stopSchedule(@RequestParam("accessToken") String accessToken){
-        scheduleCache.stop(accessToken);
+    public void stopSchedule(){
+        scheduleCache.stop();
     }
 
     @PostMapping("/add")

@@ -1,0 +1,17 @@
+스크립트 변형을 통해서 오는 데이터 json 형태
+
+
+msg/ metada
+
+{
+    "msg": {
+        "temperature": 22.4,
+        "humidity": 78
+    },
+    "metadata": {
+        "deviceType": "default",
+        "deviceName": "Test Device",
+        "ts": "1689315729293"
+    },
+    "msgType": "POST_TELEMETRY_REQUEST"
+}

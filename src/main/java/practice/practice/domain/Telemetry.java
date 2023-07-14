@@ -2,12 +2,14 @@ package practice.practice.domain;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import practice.practice.domain.en.TelemetryType;
 
 import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("telemetry")
+@NoArgsConstructor
 public class Telemetry {
 
     @Id
@@ -18,7 +20,7 @@ public class Telemetry {
     @Column(name = "telemetry_type")
     @Getter
     private TelemetryType telemetryType;
-    @Column(name = "key_value", unique = true)
+    @Column(name = "key_value")
     private String keyValue;
     @Column(name = "status_value")
     private String statusValue;

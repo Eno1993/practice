@@ -7,6 +7,7 @@ import org.springframework.scheduling.support.PeriodicTrigger;
 import org.springframework.stereotype.Service;
 import practice.practice.domain.Device;
 import practice.practice.domain.Telemetry;
+import practice.practice.domain.dto.TelemetryDto;
 import practice.practice.feign.DeviceFeignClient;
 import practice.practice.repo.DeviceRepository;
 import practice.practice.repo.TelemetryRepository;
@@ -21,7 +22,6 @@ public class ScheduleCache {
 
     private static ThreadPoolTaskScheduler scheduler;
     private static Map<String, ScheduledFuture<?>> scheduleMap = new HashMap<>();
-    private final DeviceRepository deviceRepository;
     private final TelemetryRepository telemetryRepository;
     private final DeviceFeignClient deviceFeignClient;
 
@@ -33,7 +33,7 @@ public class ScheduleCache {
         }
     }
 
-    public void stop(String accessToken){
+    public void stop(){
 
         if(scheduler!=null){
             scheduler.shutdown();
@@ -64,13 +64,15 @@ public class ScheduleCache {
 
     public Runnable getRunnable(String accessToken){
         return () ->{
-            List<Telemetry> telemetryList = telemetryRepository.getTelemetryListByAccessToken(accessToken);
+            List<TelemetryDto.TelemetryValue> telemetryValueList = telemetryRepository.getTelemetryListByAccessToken(accessToken);
 
-            telemetryList.stream()
-                    .forEach(telemetry -> {
+            telemetryValueList.stream()
+                    .forEach(telemetryValue -> {
                         String jsonBody = "{\"key\":\"value\"}";
                         try {
-                            deviceFeignClient.sendTelemetry(accessToken, jsonBody);
+                            deviceFeignClient.sendTelemetry(
+                                    accessToken,
+                                    telemetryValue.getJsonBody());
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
